@@ -20,7 +20,8 @@ public class UserInput {
     StringBuilder sb = new StringBuilder();
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-      System.out.println("Enter your multiline input (terminate with an emptyline):");
+      System.out.println(ValidasiInput.inputOutputViews("input")
+          + "Inputkan data di sini, Anda dapat menginputkan data lebih dari satu baris  (Akhiri input dengan satu baris kosong):");
       String line;
       while ((line = reader.readLine()) != null && !line.isEmpty()) {
         sb.append(line).append("\n");
@@ -28,6 +29,8 @@ public class UserInput {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    System.out.println("=== Inputan Anda ===");
     System.out.println(sb.toString());
     return sb.toString();
   }
