@@ -12,31 +12,51 @@ public class CustomFileUtilities {
     }
   }
 
-  public static String buatFile(String basePath, String path) {
+  private static String pesanBerhasilBuatFile(String namaFile) {
+    return ValidasiInput.inputOutputViews("outputSpace") + "File baru dengan nama \"" + namaFile
+        + "\" telah dibuat.";
+  }
+
+  public static String buatFile(String basePath, String path, Boolean isRepeated) {
     try {
       File file;
       while (true) {
-        String namaFile = UserInput.inputNamaFile(scanner);
-        file = new File(path += namaFile);
-        if (file.createNewFile()) {
-          System.out
-              .println(ValidasiInput.inputOutputViews("outputSpace") + "File baru dengan nama \"" + file.getName()
-                  + "\" telah dibuat.");
-          return path;
+        if (!isRepeated) {
+          String namaFile = UserInput.inputNamaFile(scanner);
+          file = new File(path += namaFile);
+          if (file.createNewFile()) {
+            System.out.println(pesanBerhasilBuatFile(file.getName()));
+            return path;
+          } else {
+            path = basePath;
+            System.out
+                .println(ValidasiInput.inputOutputViews("outputSpace") + "Nama file \"" + file.getName()
+                    + "\" telah digunakan. Silakan gunakan nama lain.");
+            continue;
+          }
         } else {
-          path = basePath;
-          System.out
-              .println(ValidasiInput.inputOutputViews("outputSpace") + "Nama file \"" + file.getName()
-                  + "\" telah digunakan. Silakan gunakan nama lain.");
-          continue;
+          File newFile = new File(path);
+          newFile.createNewFile();
+          System.out.println(pesanBerhasilBuatFile(newFile.getName()));
+          return path;
         }
       }
     } catch (Exception e) {
       if (e.getMessage().contains("No such file or directory")) {
+        /*
+         * Blok kode if ini berfungsi untuk membuat folder baru dan membuat file
+         * berdasarkan nama file yang sudah ditentukan jika folder "file-tersimpan"
+         * secara tidak sengaja hilang.
+         */
         buatFolder(basePath);
-        buatFile(basePath, path);
+        buatFile(basePath, path, true);
+      } else {
+        System.out.println("Error dalam pembuatan file: " + e.getMessage());
       }
-      System.out.println("Error dalam pembuatan file: " + e.getMessage());
+    }
+
+    if (path != basePath) {
+      return path;
     }
     return null;
   }
@@ -59,7 +79,7 @@ public class CustomFileUtilities {
     String path = basePath;
     try {
       buatFolder(basePath);
-      tulisDataPadaFile(buatFile(basePath, path), data);
+      tulisDataPadaFile(buatFile(basePath, path, false), data);
       scanner.close();
     } catch (Exception e) {
       System.out.println("Error dalam menulis dan membuat file: " + e.getMessage());

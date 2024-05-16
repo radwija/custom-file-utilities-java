@@ -21,7 +21,8 @@ public class UserInput {
     try {
       BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
       System.out.println(ValidasiInput.inputOutputViews("input")
-          + "Inputkan data di sini, Anda dapat menginputkan data lebih dari satu baris  (Akhiri input dengan satu baris kosong):");
+          + "Inputkan data di sini,\n" + ValidasiInput.inputOutputViews("input")
+          + "Anda dapat menginputkan data lebih dari satu baris (Akhiri input dengan menekan tombol \"Enter\" pada satu baris kosong):");
       String line;
       while ((line = reader.readLine()) != null && !line.isEmpty()) {
         sb.append(line).append("\n");
