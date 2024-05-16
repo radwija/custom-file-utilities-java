@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
 
-public class PenyimpanFile {
+public class CustomFileUtilities {
   private static final Scanner scanner = new Scanner(System.in);
 
   public static void buatFolder(String nama) {
