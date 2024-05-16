@@ -9,7 +9,7 @@ public class UserInput {
       System.out.print(ValidasiInput.inputOutputViews("input") + "Masukkan nama file: ");
       String namaFile = scanner.nextLine();
       if (!namaFile.isBlank()) {
-        return namaFile;
+        return namaFile.trim().replace(" ", "-");
       }
       System.out.println(ValidasiInput.inputOutputViews("outputSpace") + "Input tidak valid.");
       continue;

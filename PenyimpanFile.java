@@ -21,7 +21,7 @@ public class PenyimpanFile {
         if (file.createNewFile()) {
           System.out
               .println(ValidasiInput.inputOutputViews("outputSpace") + "File baru dengan nama \"" + file.getName()
-                  + "\" telah dibuat. Silakan cek file Anda di " + basePath + namaFile);
+                  + "\" telah dibuat.");
           return path;
         } else {
           path = basePath;
@@ -32,6 +32,10 @@ public class PenyimpanFile {
         }
       }
     } catch (Exception e) {
+      if (e.getMessage().contains("No such file or directory")) {
+        buatFolder(basePath);
+        buatFile(basePath, path);
+      }
       System.out.println("Error dalam pembuatan file: " + e.getMessage());
     }
     return null;
@@ -41,24 +45,21 @@ public class PenyimpanFile {
     try {
       FileWriter fileWriter = new FileWriter(path);
       fileWriter.write(data);
-      System.out.println(ValidasiInput.inputOutputViews("outputSpace") + "Data telah berhasil ditulis pada file.");
+      System.out.println(ValidasiInput.inputOutputViews("outputSpace")
+          + "Data telah berhasil ditulis pada file. Silakan cek file Anda di " + "\"" + path + "\"" + ".");
       fileWriter.close();
     } catch (Exception e) {
       System.out.println("Error dalam menulis pada file: " + e.getMessage());
     }
   }
 
-  public static void tulisDanBuatFile() {
+  public static void buatDanTulisFile() {
     String data = UserInput.inputData();
     String basePath = "file-tersimpan/";
+    String path = basePath;
     try {
-      // File file;
-      String path = basePath;
-
       buatFolder(basePath);
-
       tulisDataPadaFile(buatFile(basePath, path), data);
-
       scanner.close();
     } catch (Exception e) {
       System.out.println("Error dalam menulis dan membuat file: " + e.getMessage());
